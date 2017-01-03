@@ -26,10 +26,22 @@ set laststatus=2
 set statusline=%F%m\ [type=%Y]\ [line=%l,column=%c,%p%%]
 
 " Use arrow keys to jump among window buffers.
-noremap <S-Left> <C-w><Left>
-noremap <S-Right> <C-w><Right>
-noremap <S-Up> <C-w><Up>
-noremap <S-Down> <C-w><Down>
+inoremap <S-Left> <C-w><Left>
+inoremap <S-Right> <C-w><Right>
+inoremap <S-Up> <C-w><Up>
+inoremap <S-Down> <C-w><Down>
 
 " Invoke NERDTree.
-noremap tt :NERDTree<CR>
+inoremap tt <Esc>:NERDTree<CR>
+nnoremap tt :NERDTree<CR>
+" Nerdtree settings
+autocmd StdinReadPre * let s:stdin=1
+autocmd VimEnter * if argc() == 0 && !exists('s:stdin') | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:stdin") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+
+" Other keymappings
+set timeout
+set timeoutlen=200
+
+inoremap qq <Esc>
