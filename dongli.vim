@@ -25,6 +25,16 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 set laststatus=2
 set statusline=%F%m\ [type=%Y]\ [line=%l,column=%c,%p%%]
 
+" Automatic turn on/off paste mode.
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
 " Use arrow keys to jump among window buffers.
 inoremap <S-Left> <C-w><Left>
 inoremap <S-Right> <C-w><Right>
